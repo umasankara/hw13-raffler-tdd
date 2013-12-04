@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="IS 698 Homework 13 submitted by Umasankar Arumugam">    
+    <meta name="author" content="Dr. Gerald Canfield">
+    <meta name="robots" content="noindex, nofollow">
+    <title>IS 698 Fall 2013 - Homework 13 - Spec Runner for Raffler TDD using Jasmine</title>
+    <link rel="stylesheet" type="text/css" href="raffler.css">
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.3.0/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="lib/jasmine-1.3.0/jasmine.css">
+</head>
+
+<body>
+    <header id="header">
+    <h1>Raffler</h1>
+    </header>
+    <section id="raffler">
+        <div id="new">
+            <input id="new_entry"  size="60" autofocus>
+            <input type="submit" value="New" id="newvalue"/>
+        </div>
+        <div id="winners">
+        </div>
+        <div id='chooser'>
+            <button id='choosewinner'>Draw Winner</button>
+            <input type="submit" id='reset' value = "Reset"/>
+        </div>
+    </section>
+
+ <!-- Template -->
+ <script type="text/template" id="item-template">
+    <ul>
+      <% _.each(entries, function(entry){ %>
+          <li>
+          <button id='<%- entry.id %>'>Delete</button>
+          <label class="entry-name" >
+          <%-  entry.name %>
+          <span class="entry-winner"><% if ( entry.winner) { %>WINNER<% } %></span>
+          </label></li>
+      <% }); %>
+    </ul>
+ </script>
+
+ <script type="text/javascript" src="lib/jasmine-1.3.0/jasmine.js"></script>
+ <script type="text/javascript" src="lib/jasmine-1.3.0/jasmine-html.js"></script>
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ <script type="text/javascript" src="Underscore.js"></script>
+ <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+ <script type="text/javascript" src="backbone.localStorage.js"></script>
+ <script type="text/javascript" src="src/raffler.js"></script>
+ <script type="text/javascript" src="spec/tdd-spec.js"></script>
+
+ <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+      var htmlReporter = new jasmine.HtmlReporter();
+      jasmineEnv.addReporter(htmlReporter);
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+      var currentWindowOnload = window.onload;
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+    })();
+ </script>
+
+</body>
+</html>
